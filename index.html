@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RenalMet | Bản mẫu hỗ trợ theo dõi chức năng thận</title>
+<style>
+:root{--ink:#172b4d;--muted:#62718a;--line:#dfe7f1;--bg:#f4f7fb;--teal:#087e8b;--blue:#2559a7;--pale:#eaf6f6;--amber:#fff4dc;--red:#fff0ee}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:linear-gradient(120deg,#123c68,#087e8b);color:white;padding:28px 20px 34px}
+.wrap{max-width:1120px;margin:auto;padding:0 18px}.brand{font-size:13px;letter-spacing:.15em;text-transform:uppercase;opacity:.85;font-weight:700}
+h1{font-size:clamp(26px,4vw,38px);line-height:1.15;margin:10px 0}.subtitle{max-width:740px;color:#e0f2f4;margin:0}
+main{margin-top:-16px;padding-bottom:40px}.layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);gap:18px;align-items:start}
+.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 6px 24px #18375a0a;margin-bottom:18px}
+h2{font-size:19px;margin:0 0 5px}h3{font-size:15px;margin:0 0 12px}.muted{color:var(--muted);font-size:13px;margin:0 0 18px}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field label{display:block;font-weight:650;font-size:13px;margin-bottom:6px}
+input,select{width:100%;padding:11px 12px;border:1px solid #cbd6e4;border-radius:9px;font:inherit;color:var(--ink);background:white}
+input:focus,select:focus{outline:3px solid #cdecef;border-color:var(--teal)}
+.full{grid-column:1/-1}.unitbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:14px 0 18px}.unitbar label{font-size:13px;font-weight:700}
+button{border:0;border-radius:10px;padding:12px 17px;font:inherit;font-weight:700;cursor:pointer}
+.primary{background:var(--teal);color:white}.secondary{background:#edf2f8;color:var(--ink)}button:hover{filter:brightness(.97)}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+.metricgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.metric{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fcfdff;min-width:0}
+.metric .name{font-size:12px;color:var(--muted);font-weight:700}.metric .value{font-size:25px;font-weight:750;letter-spacing:-.03em;margin:4px 0;overflow-wrap:anywhere}.metric .unit{font-size:12px;color:var(--muted)}
+.status{padding:14px;border-radius:11px;margin-top:14px;background:var(--pale);border:1px solid #cde8e8}
+.status.warn{background:var(--amber);border-color:#f2d89d}.status.error{background:var(--red);border-color:#f2c5be}
+.status strong{display:block;margin-bottom:4px}.status p{margin:0;font-size:13px}
+.notice{font-size:12px;color:var(--muted);margin-top:14px}.disclaimer{border-left:4px solid #d99b2b;background:#fffaf0;padding:13px 15px;border-radius:6px;font-size:13px}
+.steps{display:grid;gap:12px}.step{display:flex;gap:12px}.num{width:28px;height:28px;flex:0 0 28px;border-radius:50%;display:grid;place-items:center;background:#e8f4f5;color:#087e8b;font-weight:800}
+.step p{margin:2px 0 0;font-size:13px;color:var(--muted)}footer{color:var(--muted);font-size:12px;text-align:center;padding:18px}
+.hidden{display:none!important}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr 1fr}.panel{padding:18px}}
+@media(max-width:480px){.formgrid,.metricgrid{grid-template-columns:1fr}.full{grid-column:auto}.wrap{padding:0 12px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="brand">RenalMet · Bản mẫu nghiên cứu</div>
+<h1>Khám phá các chỉ số chuyển hóa<br>và chức năng thận</h1>
+<p class="subtitle">Công cụ minh họa để tính các chỉ số từ dữ liệu khám sức khỏe định kỳ, dựa trên hướng nghiên cứu TyG, TG/HDL-C, METS-IR và eGFR.</p>
+</div></header>
+<main class="wrap">
+<div class="layout">
+<section class="panel">
+<h2>1. Nhập dữ liệu</h2>
+<p class="muted">Nhập số liệu xét nghiệm và thông tin cơ bản. Các phép tính chạy ngay trên trình duyệt; bản mẫu không gửi dữ liệu lên máy chủ.</p>
+<div class="unitbar"><label for="units">Đơn vị xét nghiệm:</label><select id="units" style="max-width:230px"><option value="si" selected>SI thường dùng tại Việt Nam (mmol/L, µmol/L)</option><option value="conv">mg/dL và creatinine mg/dL</option></select></div>
+<div class="formgrid">
+<div class="field"><label for="age">Tuổi (năm)</label><input id="age" type="number" min="18" max="120" placeholder="Ví dụ: 45"></div>
+<div class="field"><label for="sex">Giới tính dùng cho công thức eGFR</label><select id="sex"><option value="F">Nữ</option><option value="M">Nam</option></select></div>
+<div class="field"><label for="bmi">BMI (kg/m²)</label><input id="bmi" type="number" min="10" max="80" step="0.1" placeholder="Ví dụ: 23.5"></div>
+<div class="field"><label for="glucose">Glucose lúc đói</label><input id="glucose" type="number" min="0" step="any" placeholder="Ví dụ: 5.2"></div>
+<div class="field"><label for="tg">Triglyceride (TG)</label><input id="tg" type="number" min="0" step="any" placeholder="Ví dụ: 1.4"></div>
+<div class="field"><label for="hdl">HDL-C</label><input id="hdl" type="number" min="0" step="any" placeholder="Ví dụ: 1.3"></div>
+<div class="field full"><label for="creatinine">Creatinine huyết thanh</label><input id="creatinine" type="number" min="0" step="any" placeholder="Ví dụ: 78"></div>
+</div>
+<div class="actions"><button class="primary" id="calc">Tính các chỉ số</button><button class="secondary" id="reset">Xóa dữ liệu</button></div>
+<p class="notice">Lưu ý: cần dùng kết quả xét nghiệm lúc đói và đúng đơn vị. Không nhập dữ liệu định danh người bệnh vào bản mẫu.</p>
+</section>
+<div>
+<section class="panel">
+<h2>2. Kết quả tính toán</h2>
+<p class="muted">Kết quả chỉ có ý nghĩa khi dữ liệu đầu vào và công thức được xác nhận chính xác.</p>
+<div id="empty" class="status"><strong>Chưa có kết quả</strong><p>Nhập đủ các trường bắt buộc rồi chọn “Tính các chỉ số”.</p></div>
+<div id="results" class="hidden">
+<div class="metricgrid">
+<div class="metric"><div class="name">eGFR · CKD-EPI 2021</div><div class="value" id="egfr">—</div><div class="unit">mL/phút/1,73 m²</div></div>
+<div class="metric"><div class="name">TyG</div><div class="value" id="tyg">—</div><div class="unit">chỉ số không đơn vị</div></div>
+<div class="metric"><div class="name">TG/HDL-C</div><div class="value" id="ratio">—</div><div class="unit">tỷ số theo cùng đơn vị</div></div>
+<div class="metric"><div class="name">METS-IR*</div><div class="value" id="mets">—</div><div class="unit">chỉ số không đơn vị</div></div>
+</div>
+<div id="interpret" class="status" style="margin-top:14px"><strong>Thông tin tham khảo</strong><p>—</p></div>
+<div class="actions"><button class="secondary" id="export">Xuất kết quả CSV</button></div>
+</div>
+<div class="disclaimer" style="margin-top:16px"><strong>Không phải công cụ chẩn đoán.</strong> eGFR dưới 90 không tự nó xác lập bệnh thận mạn. Nhân viên y tế cần diễn giải cùng tiền sử, dấu ấn tổn thương thận (ví dụ albumin niệu), và tính kéo dài của bất thường.</div>
+</section>
+<section class="panel">
+<h2>3. Cách sử dụng</h2>
+<div class="steps">
+<div class="step"><div class="num">1</div><div><strong>Nhập số liệu</strong><p>Điền thông tin cơ bản và kết quả xét nghiệm, chọn đúng đơn vị.</p></div></div>
+<div class="step"><div class="num">2</div><div><strong>Xem chỉ số</strong><p>Website tính eGFR và các chỉ số chuyển hóa theo công thức được cài đặt.</p></div></div>
+<div class="step"><div class="num">3</div><div><strong>Trao đổi với nhân viên y tế</strong><p>Dùng kết quả như thông tin tham khảo, không tự kết luận có hoặc không có bệnh.</p></div></div>
+</div>
+</section>
+</div>
+</div>
+<section class="panel">
+<h2>Giới hạn của bản mẫu</h2>
+<p class="muted" style="margin-bottom:8px">Trong nghiên cứu nền, AUC của TyG, TG/HDL-C và METS-IR lần lượt xấp xỉ 0,541; 0,540 và 0,539. Khả năng phân biệt nhóm eGFR dưới 90 còn hạn chế, vì vậy bản mẫu không tạo điểm “nguy cơ”, không xếp hạng bệnh nhân và không đưa ra quyết định sàng lọc tự động.</p>
+<p class="muted" style="margin:0">*Công thức METS-IR cần được đối chiếu lần cuối với tài liệu gốc và quy ước đơn vị trong báo cáo nghiên cứu trước khi dùng trong nghiên cứu hoặc thực hành. Bản mẫu không lưu dữ liệu sau khi đóng hoặc tải lại trang.</p>
+</section>
+</main>
+<footer>RenalMet · Bản minh họa phục vụ phát triển ý tưởng nghiên cứu · Không thay thế đánh giá chuyên môn</footer>
+<script>
+const $ = id => document.getElementById(id);
+let last = null;
+function fmt(x,n=3){return Number.isFinite(x)?x.toFixed(n):'—'}
+function calculate(){
+ const age=Number($('age').value), sex=$('sex').value, bmi=Number($('bmi').value);
+ let g=Number($('glucose').value), tg=Number($('tg').value), hdl=Number($('hdl').value), cr=Number($('creatinine').value);
+ const unit=$('units').value;
+ const vals=[age,bmi,g,tg,hdl,cr];
+ if(vals.some(v=>!Number.isFinite(v)||v<=0)||age<18||age>120||bmi<10||bmi>80){
+   alert('Vui lòng nhập đủ các giá trị hợp lệ và lớn hơn 0. Tuổi cần từ 18 trở lên.');return;
+ }
+ if(unit==='si'){g*=18.0182;tg*=88.57;hdl*=38.67;cr/=88.4;}
+ if(g<=0||tg<=0||hdl<=0||cr<=0){alert('Giá trị sau quy đổi không hợp lệ.');return;}
+ // TyG convention: natural log of TG (mg/dL) × glucose (mg/dL) / 2.
+ const tyg=Math.log(tg*g/2);
+ const ratio=tg/hdl;
+ // Formula as transcribed in the group's report; confirm against source before formal use.
+ const mets=(Math.log(2*g+tg)*bmi)/Math.log(hdl);
+ // CKD-EPI 2021 creatinine equation, race-free.
+ const female=sex==='F', k=female?0.7:0.9, alpha=female?-0.241:-0.302;
+ const egfr=142*Math.pow(Math.min(cr/k,1),alpha)*Math.pow(Math.max(cr/k,1),-1.2)*Math.pow(0.9938,age)*(female?1.012:1);
+ $('egfr').textContent=fmt(egfr,1);$('tyg').textContent=fmt(tyg,3);$('ratio').textContent=fmt(ratio,3);$('mets').textContent=fmt(mets,2);
+ $('empty').classList.add('hidden');$('results').classList.remove('hidden');
+ const box=$('interpret');box.className='status'+(egfr<90?' warn':'');
+ box.innerHTML=egfr<90?'<strong>eGFR dưới 90 mL/phút/1,73 m²</strong><p>Kết quả cần được nhân viên y tế diễn giải trong bối cảnh lâm sàng. Một giá trị đơn lẻ không đủ để chẩn đoán bệnh thận mạn.</p>':'<strong>eGFR từ 90 mL/phút/1,73 m² trở lên</strong><p>Giá trị này không loại trừ mọi vấn đề về thận. Hãy diễn giải cùng các xét nghiệm và yếu tố lâm sàng liên quan.</p>';
+ last={age,sex,bmi,glucose:$('glucose').value,tg:$('tg').value,hdl:$('hdl').value,creatinine:$('creatinine').value,units:unit,eGFR:fmt(egfr,1),TyG:fmt(tyg,3),TG_HDL_C:fmt(ratio,3),METS_IR:fmt(mets,2)};
+}
+$('calc').addEventListener('click',calculate);
+$('reset').addEventListener('click',()=>{['age','bmi','glucose','tg','hdl','creatinine'].forEach(id=>$(id).value='');$('sex').value='F';$('units').value='si';$('results').classList.add('hidden');$('empty').classList.remove('hidden');last=null;});
+$('export').addEventListener('click',()=>{if(!last)return;const keys=Object.keys(last);const csv=[keys.join(','),keys.map(k=>'"'+String(last[k]).replaceAll('"','""')+'"').join(',')].join('\r\n');const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='renalmet_ket_qua.csv';a.click();URL.revokeObjectURL(url);});
+</script>
+</body>
+</html>
